@@ -1,37 +1,27 @@
 import "./App.css";
-import React, { useReducer, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 // import "./styles.css";
 
 // initalising state of the component
 const initialState = {
-  word:
-    window.localStorage.getItem("word") == null
+  word1:
+    window.localStorage.getItem("word1") == null
       ? ""
-      : window.localStorage.getItem("word"),
+      : window.localStorage.getItem("word1"),
 };
 
 // reducer function with updateWord and clearInput effect
-function reducer(state, action) {
-  switch (action.type) {
-    case "updateWord":
-      return { word: action.payload };
-    case "clearInput":
-      return { word: "" };
-    default:
-      return state;
-  }
-}
 
-function App() {
+function App1() {
   // intialise the reducer
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, setState] = useState(initialState);
 
   // listens for changes in the state, when changed it updates
   // the localStorage value of word
   useEffect(() => {
-    window.localStorage.setItem("word", state.word);
-  }, [state.word]);
+    window.localStorage.setItem("word1", state.word1);
+  }, [state.word1]);
 
   return (
     <div className="App">
@@ -40,10 +30,8 @@ function App() {
           <label>Input a word:</label>
           <input
             className="input flex-child"
-            value={state.word}
-            onChange={(e) =>
-              dispatch({ type: "updateWord", payload: e.target.value })
-            }
+            value={state.word1}
+            onChange={(e) => setState({ word1: e.target.value })}
           />
         </form>
 
@@ -54,9 +42,9 @@ function App() {
           Clear localStorage
         </button>
         <button
-          disabled={state.word < 1}
+          disabled={state.word1 < 1}
           className="flex-child"
-          onClick={() => dispatch({ type: "clearInput" })}
+          onClick={() => setState({ word1: "" })}
         >
           Clear input
         </button>
@@ -65,4 +53,4 @@ function App() {
   );
 }
 
-export default App;
+export default App1;
